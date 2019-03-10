@@ -1,7 +1,29 @@
 <template>
-<!-- <b-container fluid> -->
-  <b-table striped small :tbody-tr-class="rowClicked" @row-clicked="populateForm" hover stacked="md" :items="item" bordered :fields="fields"></b-table>
-<!-- </b-container> -->
+<b-container fluid>
+  <div class="d-flex justify-content-between">
+<div class=' perPage'>
+    <span>Show</span>
+    <select v-model="perPage">
+      <option value="10">10</option>
+      <option value="25">25</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+    <span>Entries</span>
+  </div>
+  <div class=' perPage'>
+    <span>Search</span>
+    <input type="text" v-model="filter">
+  </div>
+  </div>
+
+  <b-table :current-page="currentPage" :filter="filter" :per-page="perPage" striped small :tbody-tr-class="rowClicked" @row-clicked="populateForm" hover stacked="md" :items="item" bordered :fields="fields"></b-table>
+  <div class="d-flex justify-content-between text-white">
+    <span v-text="`Showing ${((currentPage-1)*perPage)+1} to ${currentPage*perPage} of ${item.length} Entries`"></span>
+  <b-pagination :total-rows="item.length" :per-page="perPage" v-model="currentPage"></b-pagination>
+  </div>
+
+</b-container>
 
 </template>
 
@@ -25,7 +47,10 @@ export default {
         { key: 'reqD', label: 'Request Date', formatter: 'dateFormat', sortable: true },
         { key: 'closD', label: 'Complete Date', formatter: 'dateFormat', sortable: true }
       ],
-      apiUrl: process.env.VUE_APP_API_URL
+      apiUrl: process.env.VUE_APP_API_URL,
+      perPage: '25',
+      filter: '',
+      currentPage: 1
     }
   },
   computed: {
@@ -115,5 +140,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.perPage{
+  color:white;
+}
 
 </style>
