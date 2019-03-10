@@ -14,25 +14,7 @@
         </div>
 
         <div class="col-md-5 d-flex justify-content-end align-item-center p-0 m-0 h-50 helpBtn">
-          <input
-            type="button"
-            value="Help"
-            class="btn p-0 m-0 helpButton"
-            data-toggle="popover"
-            data-placement="right"
-            title="Help"
-            data-content=" PM : Preventative Maintenance<br>
-              RM : Reactive Maintenance<br>
-              SM : Support Maintenance<br>
-              VI : Visual Inspection<br>
-              RS: Repair & Service <br>
-              RP : Replace<br>
-              PR : Project <br>
-              HK : Housekeeping<br>
-              UC : Unclogging<br>
-              PT : Painting<br>
-              SL : Sealing"
-          >
+          <input type="button" value="Help" class="btn p-0 m-0 helpButton" id="popOverHelp">
         </div>
       </div>
 
@@ -264,7 +246,19 @@
         >
       </div>
     </form>
-
+    <b-popover target="popOverHelp" triggers="hover">
+      <template slot="title">Help</template>PM : Preventative Maintenance
+      <br>RM : Reactive Maintenance
+      <br>SM : Support Maintenance
+      <br>VI : Visual Inspection
+      <br>RS: Repair & Service
+      <br>RP : Replace
+      <br>PR : Project
+      <br>HK : Housekeeping
+      <br>UC : Unclogging
+      <br>PT : Painting
+      <br>SL : Sealing
+    </b-popover>
     <div class="container card alertMsg justify-content-center text-center" id="alertMsg"></div>
 
     <!-- <div v-show="getIsLoading" class="d-inline-block" style=" bottom:10%;"> -->
@@ -680,7 +674,6 @@ export default {
         this.changeEditClicked(true)
         uiControl.editClicked()
       } else {
-
       }
     },
     deleteData () {
@@ -688,17 +681,19 @@ export default {
         return
       }
       this.getIsLoading = true
-      axios.get(`${this.apiUrl}delete.php`, {
-        params: {
-          dataId: this.getClickedRow
-        }
-      }).then(({ data }) => {
-        this.deleteTableItem()
-        uiControl.editReset()
-        this.getIsLoading = false
-        uiControl.displayMessage(data)
-      })
-        .catch((error) => {
+      axios
+        .get(`${this.apiUrl}delete.php`, {
+          params: {
+            dataId: this.getClickedRow
+          }
+        })
+        .then(({ data }) => {
+          this.deleteTableItem()
+          uiControl.editReset()
+          this.getIsLoading = false
+          uiControl.displayMessage(data)
+        })
+        .catch(error => {
           this.getIsLoading = false
           uiControl.displayMessage('Error in deleting')
         })
