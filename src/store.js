@@ -111,6 +111,8 @@ export default new Vuex.Store({
 
       }
       await commit('submitFormData', newData)
+      const form = document.querySelector('form')
+      form.reset()
       dispatch('resetForm')
     },
     async saveSearchData ({ commit, dispatch }, payload) {
