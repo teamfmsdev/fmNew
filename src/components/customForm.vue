@@ -597,9 +597,9 @@ export default {
     },
     saveData () {
       // If it is editing mode
-      if (this.getEditClicked && this.getClickedRow) {
-        // console.log("Updating...");
-        this.getIsLoading = true
+      if (this.getEditClicked && this.getClickedRow && this.getFormState) {
+        if(confirm("Confirm to edit this entry ?")){
+            this.getIsLoading = true
         axios
           .get(`${this.apiUrl}update.php`, {
             params: {
@@ -625,12 +625,15 @@ export default {
             this.getIsLoading = false
             uiControl.editReset()
             uiControl.displayMessage(data)
-            // console.log("Update success");
           })
           .catch(error => {
             this.getIsLoading = false
             uiControl.displayMessage('Failed to Update')
           })
+        }
+        else{
+          return
+        }
       } else {
         let closedDate = dayjs(this.closD)
         let requestDate = dayjs(this.reqD)
@@ -642,13 +645,12 @@ export default {
         // if(this.stat!='Closed' && this.closD!="" || this.reqD!="" ){
         //   alertMsg+="Error, Status must be CLOSED for closed record \n"
         // }
-        //     console.log(errorMsg)
+
         if (errorMsg) {
           alert(errorMsg)
           return
         }
 
-        // console.log("Saving...");
         this.getIsLoading = true
         axios
           .get(`${this.apiUrl}save.php`, {
@@ -674,9 +676,7 @@ export default {
             this.$store.dispatch('submitFormData', data.row)
             this.getIsLoading = false
 
-            const alertMsg = document.querySelector('.alertMsg')
             uiControl.displayMessage(data['serverMessage'])
-            // console.log("Save success");
           })
           .catch(error => {
             this.getIsLoading = false
@@ -709,6 +709,10 @@ export default {
           this.saveSearchData(data)
           this.getIsLoading = false
         })
+        .catch(() => {
+          this.getIsLoading = false
+          uiControl.displayMessage('Failed to retrieve data')
+        })
     },
     editMode () {
       const searchBtn = document.querySelector('#searchBtn')
@@ -728,7 +732,10 @@ export default {
       if (!this.getClickedRow && !this.getEditClicked) {
         return
       }
-      this.getIsLoading = true
+
+
+      if(confirm("Do you want to delete this record ?")){
+          this.getIsLoading = true
       axios
         .get(`${this.apiUrl}delete.php`, {
           params: {
@@ -745,6 +752,9 @@ export default {
           this.getIsLoading = false
           uiControl.displayMessage('Error in deleting')
         })
+      }
+      
+      
     }
   },
   created () {
@@ -793,10 +803,6 @@ $mobile: 768px;
 
 .closedByLine {
   transition: all 1s;
-}
-
-.loadingBar {
-  min-height: 50px;
 }
 
 .btn {
