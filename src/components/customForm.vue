@@ -138,7 +138,7 @@
           v-model="sapN"
           class="form-control sapN col-md-4"
           id="sapN"
-          :disabled="(getFormState && sapS!='Yes') || (getFormState && getClickedRow!='' && !getEditClicked)"
+          :disabled="(getFormState && sapS!='Yes') || (getFormState && getClickedRow!='' && !getEditClicked ) "
           type="text"
           :required="!getFormState"
         >
@@ -197,6 +197,7 @@
           class="form-control col-md-4"
           type="date"
           :required="(!getFormState && stat=='Closed') || this.getEditClicked && this.getClickedRow && stat=='Closed'"
+          :min="getFormState==false && stat=='Closed'?reqD:getFormState==true && getClickedRow!='' && getEditClicked?reqD:''"
         >
       </div>
 
