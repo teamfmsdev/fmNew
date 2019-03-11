@@ -601,59 +601,44 @@ export default {
     saveData () {
       // If it is editing mode
       if (this.getEditClicked && this.getClickedRow && this.getFormState) {
-        if(confirm("Confirm to edit this entry ?")){
-            this.getIsLoading = true
-        axios
-          .get(`${this.apiUrl}update.php`, {
-            params: {
-              'Work Title': this.wTitle,
-              Priority: this.prio,
-              'Type 1': this.t1,
-              'Type 2': this.t2,
-              Description: this.desc,
-              Location: this.loca,
-              Status: this.stat,
-              Company: this.comp,
-              'SAP Choice': this.sapS,
-              'SAP#': this.sapN,
-              'Request By': this.reqBy,
-              'Request Date': this.reqD,
-              'Closed By': this.closBy,
-              'Completion Date': this.closD,
-              dataID: this.getClickedRow
-            }
-          })
-          .then(async ({ data }) => {
-            this.updateTableItem()
-            this.getIsLoading = false
-            uiControl.editReset()
-            uiControl.displayMessage(data)
-          })
-          .catch(error => {
-            this.getIsLoading = false
-            uiControl.displayMessage('Failed to Update')
-          })
-        }
-        else{
-          return
-        }
-      } else {
-        let closedDate = dayjs(this.closD)
-        let requestDate = dayjs(this.reqD)
-        let errorMsg = ''
-        if (closedDate.isBefore(requestDate)) {
-          errorMsg += 'Error, Closed date is earlier than start date \n'
-        }
+        if (confirm('Confirm to edit this entry ?')) {
+          this.getIsLoading = true
+          axios
+            .get(`${this.apiUrl}update.php`, {
+              params: {
+                'Work Title': this.wTitle,
+                Priority: this.prio,
+                'Type 1': this.t1,
+                'Type 2': this.t2,
+                Description: this.desc,
+                Location: this.loca,
+                Status: this.stat,
+                Company: this.comp,
+                'SAP Choice': this.sapS,
+                'SAP#': this.sapN,
+                'Request By': this.reqBy,
+                'Request Date': this.reqD,
+                'Closed By': this.closBy,
+                'Completion Date': this.closD,
+                dataID: this.getClickedRow
+              }
+            })
+            .then(async ({ data }) => {
+              this.updateTableItem()
+              this.getIsLoading = false
+              uiControl.editReset()
+              uiControl.displayMessage(data)
+            })
+            .catch(error => {
+              this.getIsLoading = false
+              uiControl.displayMessage('Failed to Update')
+            })
+        } else {
 
-        // if(this.stat!='Closed' && this.closD!="" || this.reqD!="" ){
-        //   alertMsg+="Error, Status must be CLOSED for closed record \n"
-        // }
-
-        if (errorMsg) {
-          alert(errorMsg)
-          return
         }
-
+      }
+      // If system in NEW mode
+      else {
         this.getIsLoading = true
         axios
           .get(`${this.apiUrl}save.php`, {
