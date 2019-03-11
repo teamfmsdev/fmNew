@@ -1,13 +1,13 @@
 <template>
   <b-container fluid>
-    <div class="d-flex justify-content-between mb-3"  style="min-height:30px">
+    <div class="d-flex justify-content-between mb-3" style="min-height:30px">
       <div class="perPage">
         <span>Show</span>
         <select class="mx-1" v-model="perPage" @change="resetPage">
-          <option value=10>10</option>
-          <option value=25>25</option>
-          <option value=50>50</option>
-          <option value=100>100</option>
+          <option :value="10">10</option>
+          <option :value="25">25</option>
+          <option :value="50">50</option>
+          <option :value="100">100</option>
         </select>
         <span>Entries</span>
         <button class="btn" @click="csvPrint()" v-text="'Excel'"></button>
@@ -19,8 +19,9 @@
     </div>
 
     <b-table
-    :sort-by="'fmNo'"
-    :sort-desc="true"
+      @filtered="changeFilteredItems"
+      :sort-by="'fmNo'"
+      :sort-desc="true"
       :current-page="getTableCurrentPage"
       :filter="getTableFilter"
       :per-page="perPage"
@@ -35,9 +36,14 @@
     ></b-table>
     <div class="d-flex justify-content-between text-white" style="min-height:54px">
       <span
-        v-text="`Showing ${((currentPage-1)*perPage)+1} to ${currentPage*perPage} of ${item.length} Entries`"
+        v-text="getTableFilter?`Showing total of ${getFilteredItems.length} Entries` :`Showing total of ${item.length} Entries`"
       ></span>
-      <b-pagination v-show="!getEditClicked" :total-rows="item.length" :per-page="perPage" v-model="getTableCurrentPage"></b-pagination>
+      <b-pagination
+        v-show="!getEditClicked"
+        :total-rows="getTableFilter?getFilteredItems.length:item.length"
+        :per-page="perPage"
+        v-model="getTableCurrentPage"
+      ></b-pagination>
     </div>
   </b-container>
 </template>
@@ -77,7 +83,8 @@ export default {
       apiUrl: process.env.VUE_APP_API_URL,
       perPage: 25,
       filter: '',
-      currentPage: 1
+      currentPage: 1,
+      filteredItems: ''
     }
   },
   computed: {
@@ -109,6 +116,7 @@ export default {
       },
       set (value) {
         this.changeTableFilter(value)
+        this.changeTableCurrentPage(1)
       }
     },
     getTableCurrentPage: {
@@ -118,10 +126,69 @@ export default {
       set (value) {
         this.changeTableCurrentPage(value)
       }
+    },
+    getFilteredItems: {
+      get () {
+        return this.filteredItems
+      }
+    },
+    // Format item to export to csv
+    getCsvPrintFormattedItem () {
+      let formattedData = {
+        // Define header
+        fields: [
+          'FM#',
+          'Work Title',
+          'Priority',
+          'Type 1',
+          'Type 2',
+          'Description',
+          'Location',
+          'Status',
+          'Company',
+          'SAP#',
+          'Request By',
+          'Request Date',
+          'Closed by',
+          'Closed Date'
+        ],
+        data: []
+      }
+      // Convert item object into array of arrays
+      for (let row in this.item) {
+        formattedData['data'][row] = Object.values(this.item[row])
+      }
+
+      // Format request date and complete date in the array of arrays
+      for (let row in formattedData['data']) {
+        for (let column in formattedData['data'][row]) {
+          switch (column) {
+            case '11':
+            case '13':
+              if (formattedData['data'][row][column]) {
+                formattedData['data'][row][column] = dayjs(
+                  new Date(formattedData['data'][row][column])
+                ).format('DD-MM-YYYY')
+              } else {
+                break
+              }
+
+              break
+            default:
+              ''
+          }
+        }
+      }
+      return formattedData
     }
   },
   methods: {
-    ...mapActions(['updateFormData', 'changeClickedRow', 'changeTableFilter', 'changeTableCurrentPage']),
+    ...mapActions([
+      'updateFormData',
+      'changeClickedRow',
+      'changeTableFilter',
+      'changeTableCurrentPage'
+    ]),
     populateForm (item, index) {
       // Do nothing if form is in NEW mode
       if (!this.getFormState) {
