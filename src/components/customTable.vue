@@ -215,32 +215,36 @@ export default {
         })
         .then(({ data }) => {
           let payload
-          // Fill up form input based on data
-          for (let column in data) {
-            payload = {
-              field: column,
-              data: data[column]
+
+          this.$store.dispatch('resetForm')
+          this.$nextTick(() => {
+            // Fill up form input based on data
+            for (let column in data) {
+              payload = {
+                field: column,
+                data: data[column]
+              }
+
+              this.updateFormData(payload)
+            }
+            // Change sapChoice based on SAP#
+            if (data.sapN == '-' || data.sapN == '') {
+              payload = {
+                field: 'sapS',
+                data: 'No'
+              }
+              this.updateFormData(payload)
+            } else {
+              payload = {
+                field: 'sapS',
+                data: 'Yes'
+              }
+              this.updateFormData(payload)
             }
 
-            this.updateFormData(payload)
-          }
-          // Change sapChoice based on SAP#
-          if (data.sapN == '-' || data.sapN == '') {
-            payload = {
-              field: 'sapS',
-              data: 'No'
-            }
-            this.updateFormData(payload)
-          } else {
-            payload = {
-              field: 'sapS',
-              data: 'Yes'
-            }
-            this.updateFormData(payload)
-          }
-
-          this.changeClickedRow(item.fmNo)
-          this.getIsLoading = false
+            this.changeClickedRow(item.fmNo)
+            this.getIsLoading = false
+          })
         })
         .catch(error => {
           this.getIsLoading = false
