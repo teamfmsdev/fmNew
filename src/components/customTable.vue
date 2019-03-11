@@ -264,12 +264,10 @@ export default {
       this.changeTableCurrentPage(1)
     },
     csvPrint (
-      data = papaParse.unparse(this.item),
+      data = papaParse.unparse(this.getCsvPrintFormattedItem),
       filename = 'PCOGD FM.csv',
       mimetype
     ) {
-      // console.log(papaParse.unparse(this.item))
-
       if (!data) return
 
       var blob =
@@ -294,6 +292,9 @@ export default {
       lnk.href = objectURL = url.createObjectURL(blob)
       lnk.dispatchEvent(new MouseEvent('click'))
       setTimeout(url.revokeObjectURL.bind(url, objectURL))
+    },
+    changeFilteredItems (resultItems) {
+      this.filteredItems = resultItems
     }
   }
 }
