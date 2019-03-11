@@ -721,28 +721,25 @@ export default {
         return
       }
 
-
-      if(confirm("Do you want to delete this record ?")){
-          this.getIsLoading = true
-      axios
-        .get(`${this.apiUrl}delete.php`, {
-          params: {
-            dataId: this.getClickedRow
-          }
-        })
-        .then(({ data }) => {
-          this.deleteTableItem()
-          uiControl.editReset()
-          this.getIsLoading = false
-          uiControl.displayMessage(data)
-        })
-        .catch(error => {
-          this.getIsLoading = false
-          uiControl.displayMessage('Error in deleting')
-        })
+      if (confirm('Do you want to delete this record ?')) {
+        this.getIsLoading = true
+        axios
+          .get(`${this.apiUrl}delete.php`, {
+            params: {
+              dataId: this.getClickedRow
+            }
+          })
+          .then(({ data }) => {
+            this.deleteTableItem()
+            uiControl.editReset()
+            this.getIsLoading = false
+            uiControl.displayMessage(data)
+          })
+          .catch(error => {
+            this.getIsLoading = false
+            uiControl.displayMessage('Error in deleting')
+          })
       }
-      
-      
     }
   },
   created () {
