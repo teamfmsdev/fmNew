@@ -888,6 +888,19 @@ $mobile: 768px;
   font-weight: bold;
   border: 1px solid rgba(0, 0, 0, 0.5);
   opacity: 0;
+  display: none;
+  position: absolute;
+  top: 105%;
+  left: 25%;
+  right: 25%;
+}
+
+.loadingBar {
+  // min-height: 50px;
+  position: absolute;
+  top: 100%;
+  left: 25%;
+  right: 25%;
 }
 
 @media (max-width: 768px) {
