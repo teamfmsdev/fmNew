@@ -6,7 +6,7 @@
       <h2 class="p-0 mt-0 text-white">
         <strong v-text="'Request and Reporting'"></strong>
       </h2>
-      <a href="/pcogdfm" v-text="'Planning & Scheduling'"></a>
+      <a href="/pcogdccfm" v-text="'Planning & Scheduling'"></a>
       <!-- <router-link to="/">Home</router-link>| -->
     </div>
     <customForm></customForm>
