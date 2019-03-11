@@ -414,6 +414,47 @@ export default {
           data: value
         }
         this.updateFormData(payload)
+        // If user is editing exisiting record and change status to closed
+        if (value == 'Closed' && this.getEditClicked && this.getClickedRow) {
+          // Set closed date to current day
+          payload = {
+            field: 'closD',
+            data: dayjs(new Date()).format('YYYY-MM-DD')
+          }
+          this.updateFormData(payload)
+          // Set closed by to who requested it
+          payload = {
+            field: 'closBy',
+            data: this.reqBy
+          }
+          this.updateFormData(payload)
+        }
+        // If user choose other than "CLOSED", clear closBy and closD
+        if (value != 'Closed' && !this.getFormState) {
+          payload = {
+            field: 'closBy',
+            data: ''
+          }
+          this.updateFormData(payload)
+
+          payload = {
+            field: 'closD',
+            data: ''
+          }
+          this.updateFormData(payload)
+        } else if (value == 'Closed' && !this.getFormState) {
+          payload = {
+            field: 'closBy',
+            data: this.reqBy
+          }
+          this.updateFormData(payload)
+
+          payload = {
+            field: 'closD',
+            data: dayjs(new Date()).format('YYYY-MM-DD')
+          }
+          this.updateFormData(payload)
+        }
       }
     },
     comp: {
@@ -437,7 +478,16 @@ export default {
           field: 'sapS',
           data: value
         }
+
         this.updateFormData(payload)
+
+        if (value != 'Yes' && this.getFormState && !this.getClickedRow) {
+          payload = {
+            field: 'sapN',
+            data: ''
+          }
+          this.updateFormData(payload)
+        }
       }
     },
     sapN: {
