@@ -24,6 +24,7 @@
           id="wTitleBox"
           class="form-control col-md-5"
           v-model="wTitle"
+          type="text"
           :disabled="getFormState && getClickedRow!='' && !getEditClicked"
           :required="!getFormState"
         >
@@ -36,7 +37,7 @@
           :disabled="getFormState && getClickedRow!='' && !getEditClicked"
           :required="(!getFormState) || getClickedRow && getEditClicked"
         >
-          <option disabled selected></option>
+          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
           <option value="P1">P1</option>
           <option value="P2">P2</option>
           <option value="P3">P3</option>
@@ -51,7 +52,7 @@
           :disabled="getFormState && getClickedRow!='' && !getEditClicked"
           :required="!getFormState"
         >
-          <option disabled selected></option>
+          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
           <option value="PM">PM</option>
           <option value="RM">RM</option>
           <option value="SM">SM</option>
@@ -63,7 +64,7 @@
           :disabled="getFormState && getClickedRow!='' && !getEditClicked"
           :required="!getFormState"
         >
-          <option disabled selected></option>
+          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
           <option value="VI">VI</option>
           <option value="RS">RS</option>
           <option value="RP">RP</option>
@@ -105,7 +106,7 @@
           class="form-control col-md-4"
           :required="(!getFormState) || (getFormState && getEditClicked && getClickedRow && (closBy || closD)) "
         >
-          <option disabled selected></option>
+          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
           <option selected="selected" value="New">New</option>
           <option value="Reviewed">Reviewed</option>
           <option value="In Progress">In Progress</option>
@@ -153,12 +154,13 @@
           type="text"
           :required="!getFormState"
         >
-          <option id="defReqByOption" disable selected></option>
+          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
           <option value="Aqil">Aqil</option>
           <option value="Amirul">Amirul</option>
           <option value="Zamri">Zamri</option>
           <option value="Kamarulzaman">Kamarulzaman</option>
           <option value="Malina">Malina</option>
+          <option value="Support Team">Support Team</option>
         </select>
         <label class="col-md-2 col-form-label" for="requestdateBox">*Request Date</label>
         <input
@@ -182,12 +184,13 @@
           type="text"
           :required="(!getFormState && stat=='Closed') || this.getEditClicked && this.getClickedRow && stat=='Closed'"
         >
-          <option disabled selected></option>
+          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
           <option value="Aqil">Aqil</option>
           <option value="Amirul">Amirul</option>
           <option value="Zamri">Zamri</option>
           <option value="Kamarulzaman">Kamarulzaman</option>
           <option value="Malina">Malina</option>
+          <option value="Support Team">Support Team</option>
         </select>
 
         <label class="col-md-2 col-form-label" for="completiondateBox">Completion Date</label>
