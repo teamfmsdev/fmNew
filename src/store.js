@@ -10,6 +10,8 @@ export default new Vuex.Store({
     clickedRow: '',
     isLoading: false,
     editClicked: false,
+    tableFilter: '',
+    tableCurrentPage: 1,
     formData: {
       wTitle: '',
       prio: '',
@@ -47,6 +49,12 @@ export default new Vuex.Store({
     },
     getEditClicked: (state) => {
       return state.editClicked
+    },
+    getTableFilter: (state) => {
+      return state.tableFilter
+    },
+    getTableCurrentPage: (state) => {
+      return state.tableCurrentPage
     }
 
   },
@@ -78,6 +86,12 @@ export default new Vuex.Store({
     },
     deleteTableItem (state, { index }) {
       state.tableItems.splice(index, 1)
+    },
+    changeTableFilter (state, payload) {
+      state.tableFilter = payload
+    },
+    changeTableCurrentPage (state, payload) {
+      state.tableCurrentPage = payload
     }
 
   },
@@ -86,32 +100,23 @@ export default new Vuex.Store({
       commit('changeFormState', payload)
     },
     async updateFormData ({ commit, getters }, payload) {
-      // If user change sapChoice to something other than yes, clear sapNumber field
-      if (payload.field == 'sapS' && payload.data != 'Yes' && getters.getFormState) {
-        payload.data = payload.data.trim()
-        await commit('updateFormData', payload)
-
-        payload.field = 'sapN'
-        payload.data = ''
-
-        await commit('updateFormData', payload)
-      } else {
-        payload.data = payload.data.trim()
-        await commit('updateFormData', payload)
-      }
+      payload.data = payload.data.trim()
+      await commit('updateFormData', payload)
+      // }
     },
     async submitFormData ({ dispatch, commit, state, getters }, payload) {
       let newData = {
         ...state.formData,
-        fmNo: payload,
-        closBy: getters.getFormData['stat'] == 'Closed' ? getters.getFormData['stat'] : '',
-        closD: getters.getFormData['stat'] == 'Closed' ? getters.getFormData['closD'] : ''
+        fmNo: payload
+
       }
       await commit('submitFormData', newData)
       dispatch('resetForm')
     },
-    async saveSearchData ({ commit }, payload) {
+    async saveSearchData ({ commit, dispatch }, payload) {
       commit('searchDataResult', payload)
+      dispatch('changeTableFilter', '')
+      dispatch('changeTableCurrentPage', 1)
     },
     changeIsLoading ({ commit }, payload) {
       commit('changeIsLoading', payload)
@@ -186,7 +191,7 @@ export default new Vuex.Store({
       let index = state.tableItems.findIndex((row) => {
         return row.fmNo == getters.getClickedRow
       })
-      console.log(index)
+
       let payload = {
         data: data,
         index: index
@@ -201,6 +206,12 @@ export default new Vuex.Store({
       })
       commit('deleteTableItem', { index: index })
       dispatch('resetForm')
+    },
+    changeTableFilter ({ dispatch, commit }, payload) {
+      commit('changeTableFilter', payload)
+    },
+    changeTableCurrentPage ({ commit, dispatch }, payload) {
+      commit('changeTableCurrentPage', payload)
     }
   }
 })
