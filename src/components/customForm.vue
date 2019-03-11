@@ -263,27 +263,24 @@
     <div class="container card alertMsg justify-content-center text-center" id="alertMsg"></div>
 
     <!-- <div v-show="getIsLoading" class="d-inline-block" style=" bottom:10%;"> -->
-    <div class="loadingBar">
+    <div class="loadingBar" v-show="getIsLoading">
       <b-spinner
-        v-show="getIsLoading"
-        variant="primary"
+        variant="warning"
         type="grow"
         label="Spinning"
-        style="bottom:10%;"
+        style="bottom:10%;width:3rem;height:3rem;"
       />
       <b-spinner
-        v-show="getIsLoading"
-        variant="primary"
+        variant="warning"
         type="grow"
         label="Spinning"
-        style=" bottom:10%;"
+        style=" bottom:10%;width:3rem;height:3rem;"
       />
       <b-spinner
-        v-show="getIsLoading"
-        variant="primary"
+        variant="warning"
         type="grow"
         label="Spinning"
-        style=" bottom:10%;"
+        style=" bottom:10%;width:3rem;height:3rem;"
       />
     </div>
     <!-- </div> -->
