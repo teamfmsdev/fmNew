@@ -59,7 +59,7 @@
     // Set fetching type to associative array
     $row = $stmt ->fetchAll(PDO::FETCH_ASSOC);
     // Loop throgh array of results eg 1,2,3,4,5
-    $jsonData;
+    $jsonData = false;
     foreach ($row as $rowKey => $value) {
         // Loop through each column as key eg "Work title",SAP#
         foreach ($row[$rowKey] as $colKey => $colVal) {
