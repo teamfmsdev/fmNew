@@ -695,7 +695,13 @@ export default {
           }
         })
         .then(({ data }) => {
-          this.saveSearchData(data)
+          if (data) {
+            this.saveSearchData(data)
+          } else {
+            console.log('Search return nothing')
+            uiControl.displayMessage('No result !')
+          }
+
           this.getIsLoading = false
         })
         .catch(() => {
