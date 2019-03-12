@@ -85,7 +85,7 @@ function newMode (editClicked) {
 function displayMessage (msg) {
   alertMsg.innerText = msg
   Velocity(alertMsg, { opacity: 1 }, { duration: 300, display: 'block' })
-  Velocity(alertMsg, { opacity: 0 }, { duration: 300, delay: 3000, display: 'none' })
+  Velocity(alertMsg, { opacity: 0 }, { duration: 300, delay: 2000, display: 'none' })
 }
 
 function editClicked () {
