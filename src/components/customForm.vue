@@ -109,6 +109,7 @@
           <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
           <option selected="selected" value="New">New</option>
           <option value="Reviewed">Reviewed</option>
+          <option value="Scheduled">Scheduled</option>
           <option value="In Progress">In Progress</option>
           <option value="Closed">Closed</option>
         </select>
