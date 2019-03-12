@@ -875,6 +875,7 @@ $mobile: 768px;
 }
 
 .alertMsg {
+  background-color:#ffc107 ;
   min-height: 25px;
   width: 25%;
   font-weight: bold;
