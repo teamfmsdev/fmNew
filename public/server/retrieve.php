@@ -114,7 +114,25 @@
         
     }
     // Send result as json
-    echo json_encode($jsonData);
+    try{
+        if($jsonData!=null){
+            echo json_encode($jsonData);
+        }else{
+            echo false;
+        }
+        
+    }
+    catch(Exception $e){
+        echo false;
+    }
+    // if($jsonData){
+    //     echo json_encode($jsonData);
+    // }
+    // else{
+    //     echo false;
+    // }
+
+    
 
 // try{
 
