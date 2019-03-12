@@ -251,7 +251,7 @@
         >
       </div>
     </form>
-    <b-popover target="popOverHelp" triggers="hover">
+    <b-popover target="popOverHelp" triggers="hover" :placement="'rightbottom'">
       <template slot="title">Help</template>PM : Preventative Maintenance
       <br>RM : Reactive Maintenance
       <br>SM : Support Maintenance
