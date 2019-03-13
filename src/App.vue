@@ -25,9 +25,6 @@ export default {
   components: {
     customForm,
     customTable
-  },
-  created () {
-    document.title = 'PCOGD FM'
   }
 }
 </script>

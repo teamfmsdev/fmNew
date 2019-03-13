@@ -109,6 +109,7 @@
           <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
           <option selected="selected" value="New">New</option>
           <option value="Reviewed">Reviewed</option>
+          <option value="Scheduled">Scheduled</option>
           <option value="In Progress">In Progress</option>
           <option value="Closed">Closed</option>
         </select>
@@ -250,7 +251,7 @@
         >
       </div>
     </form>
-    <b-popover target="popOverHelp" triggers="hover">
+    <b-popover target="popOverHelp" triggers="hover" :placement="'rightbottom'">
       <template slot="title">Help</template>PM : Preventative Maintenance
       <br>RM : Reactive Maintenance
       <br>SM : Support Maintenance
@@ -694,7 +695,13 @@ export default {
           }
         })
         .then(({ data }) => {
-          this.saveSearchData(data)
+          if (data) {
+            this.saveSearchData(data)
+          } else {
+            console.log('Search return nothing')
+            uiControl.displayMessage('No result !')
+          }
+
           this.getIsLoading = false
         })
         .catch(() => {
@@ -868,6 +875,7 @@ $mobile: 768px;
 }
 
 .alertMsg {
+  background-color:#ffc107 ;
   min-height: 25px;
   width: 25%;
   font-weight: bold;
