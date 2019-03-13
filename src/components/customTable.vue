@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid>
+  <b-container class="customDataTable" fluid>
     <div class="d-flex justify-content-between mb-3" style="min-height:30px">
       <div class="perPage">
         <span>Show</span>
@@ -305,6 +305,68 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// @import 'src/styles/custom.scss';
+// @import "node_modules/bootstrap/scss/bootstrap";
+
+// @import url("/styles/custom.scss");
+
+// BOOTSTRAP DEFAULT OVERWRITE
+
+// $table-dark-hover-bg: rgb(0, 177, 169);
+// $table-hover-bg:rgb(0, 177, 169);
+// $th-bg-color:#212529;
+// $table-border-color:lighten($color:grey,$amount:40);
+
+// .table{
+//   background-color: white;
+
+//   th{
+//     background-color:$th-bg-color;
+//     color:white;
+//     // border:1px solid white;
+//   }
+//   th:nth-child(1){
+//     width:5%;
+//   }
+//   th:nth-child(2){
+//     width:25%;
+//   }
+//   th:nth-child(3){
+//     width:5%;
+//   }
+//   th:nth-child(4){
+//     width:5%;
+//   }
+//   th:nth-child(5){
+//     width:15%;
+//   }
+//   th:nth-child(6){
+//     width:5%;
+//   }
+//   th:nth-child(7){
+//     width:10%;
+//   }
+//   th:nth-child(8){
+//     width:10%;
+//   }
+//   th:nth-child(9){
+//     width:10%;
+//   }
+//   th:nth-child(10){
+//     width:10%;
+//   }
+// }
+
+// .table-hover {
+//   tbody tr {
+//     @include hover {
+//       color: $table-hover-color;
+//       background-color: $table-hover-bg;
+//       transition: background-color .3s;
+//     }
+//   }
+// }
+
 .perPage {
   color: white;
 }
