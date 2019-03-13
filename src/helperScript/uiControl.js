@@ -49,6 +49,9 @@ function newMode (editClicked) {
       { width: '0', opacity: '0' },
       { duration: 200, delay: 0, display: 'none' }
     )
+    
+    Velocity(scheduleBtn,{width:'0',opacity:'0'},
+  { duration: 200, delay: 0, display: 'none' })
   } else {
     Velocity(
       resetBtn,
@@ -85,7 +88,7 @@ function newMode (editClicked) {
 function displayMessage (msg) {
   alertMsg.innerText = msg
   Velocity(alertMsg, { opacity: 1 }, { duration: 300, display: 'block' })
-  Velocity(alertMsg, { opacity: 0 }, { duration: 300, delay: 3000, display: 'none' })
+  Velocity(alertMsg, { opacity: 0 }, { duration: 300, delay: 2000, display: 'none' })
 }
 
 function editClicked () {
@@ -111,6 +114,8 @@ function editClicked () {
     { width: '150px', opacity: '1' },
     { duration: 200, delay: 200, display: 'block' }
   )
+  Velocity(scheduleBtn,{width:'150px',opacity:'1'},
+  { duration: 200, delay: 200, display: 'block' })
 }
 
 function editReset () {
@@ -124,6 +129,9 @@ function editReset () {
     { width: '0', opacity: '0' },
     { duration: 200, delay: 0, display: 'none' }
   )
+
+  Velocity(scheduleBtn,{width:'0',opacity:'0'},
+  { duration: 200, delay: 0, display: 'none' })
 
   Velocity(
     editBtn,
