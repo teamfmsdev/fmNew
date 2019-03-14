@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="fakeBody">
+    
     <div id="nav">
       <h1 class="mb-0 p-0" v-text="'PCOGD Facilities Management'"></h1>
       <h2 class="p-0 mt-0 text-white">
@@ -11,8 +11,7 @@
     </div>
     <customForm></customForm>
     <customTable></customTable>
-    </div>
-    <!-- <div style="margin-bottom:5000px;">ABCDEF</div> -->
+    
   </div>
 </template>
 
