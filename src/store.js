@@ -92,6 +92,9 @@ export default new Vuex.Store({
     },
     changeTableCurrentPage (state, payload) {
       state.tableCurrentPage = payload
+    },
+    updateJobStatus(state,{data,index}){
+      state.tableItems[index].stat = data
     }
 
   },
