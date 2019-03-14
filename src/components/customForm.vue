@@ -249,6 +249,7 @@
           :value="getEditClicked==true?'CANCEL':'RESET'"
           @click="resetForm"
         >
+        <input v-b-modal="'scheduleModal'" type="button" class="btn mx-1" id="scheduleBtn" value="SCHEDULE">
       </div>
     </form>
     <b-popover target="popOverHelp" triggers="hover" :placement="'rightbottom'">
@@ -264,6 +265,7 @@
       <br>PT : Painting
       <br>SL : Sealing
     </b-popover>
+    <schedule-modal></schedule-modal>
     <div class="container card alertMsg justify-content-center text-center" id="alertMsg"></div>
 
     <!-- <div v-show="getIsLoading" class="d-inline-block" style=" bottom:10%;"> -->
@@ -299,6 +301,7 @@ import Velocity from 'velocity-animate'
 import axios from 'axios'
 import uiControl from '@/helperScript/uiControl.js'
 import { error } from 'util'
+import scheduleModal from "@/components/scheduleModal.vue"
 
 export default {
   name: 'mainForm',
@@ -752,6 +755,9 @@ export default {
   created () {
     // console.log(this.apiUrl);
     // console.log(process.env.VUE_APP_API_URL);
+  },
+  components:{
+    scheduleModal
   }
 }
 </script>
@@ -765,22 +771,36 @@ $mobile: 768px;
   }
 }
 
+
+.mainArea{
+  margin-right: auto !important;
+}
+
 #searchBtn {
+  opacity: 0;
   width: 0;
   display: none;
   // visibility: hidden;
 }
 
 #editBtn {
+  opacity: 0;
   width: 0;
   display: none;
   // visibility: hidden;
 }
 
 #deleteBtn {
+  opacity: 0;
   width: 0;
   display: none;
   // visibility: hidden;
+}
+
+#scheduleBtn{
+  opacity: 0;
+  width:0;
+  display:none;
 }
 
 #sapC {
