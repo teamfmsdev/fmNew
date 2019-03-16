@@ -26,7 +26,7 @@
           v-model="wTitle"
           type="text"
           :disabled="getFormState && getClickedRow!='' && !getEditClicked"
-          :required="!getFormState"
+          :required="!getFormState || getEditClicked"
         >
 
         <label class="col-1 col-form-label" for="priorityBox">Priority</label>
@@ -37,7 +37,10 @@
           :disabled="getFormState && getClickedRow!='' && !getEditClicked"
           :required="(!getFormState) || getClickedRow && getEditClicked"
         >
-          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
+          <option
+            :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')"
+            selected
+          ></option>
           <option value="P1">P1</option>
           <option value="P2">P2</option>
           <option value="P3">P3</option>
@@ -50,9 +53,12 @@
           class="form-control col-md-1"
           v-model="t1"
           :disabled="getFormState && getClickedRow!='' && !getEditClicked"
-          :required="!getFormState"
+          :required="!getFormState || getEditClicked"
         >
-          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
+          <option
+            :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')"
+            selected
+          ></option>
           <option value="PM">PM</option>
           <option value="RM">RM</option>
           <option value="SM">SM</option>
@@ -62,9 +68,12 @@
           class="form-control col-md-1"
           v-model="t2"
           :disabled="getFormState && getClickedRow!='' && !getEditClicked"
-          :required="!getFormState"
+          :required="!getFormState || getEditClicked"
         >
-          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
+          <option
+            :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')"
+            selected
+          ></option>
           <option value="VI">VI</option>
           <option value="RS">RS</option>
           <option value="RP">RP</option>
@@ -82,7 +91,7 @@
           for="descriptionBox"
         >*Description</label>
         <textarea
-          :required="!getFormState"
+          :required="!getFormState || getEditClicked"
           v-model="desc"
           :disabled="getFormState && getClickedRow!='' && !getEditClicked"
           rows="5"
@@ -97,7 +106,7 @@
           :disabled="getFormState && getClickedRow!='' && !getEditClicked"
           class="form-control col-md-4"
           type="text"
-          :required="!getFormState"
+          :required="!getFormState || getEditClicked"
         >
         <label id="Status" class="col-md-2 col-form-label" for="statusBox">*Status</label>
         <select
@@ -106,7 +115,10 @@
           class="form-control col-md-4"
           :required="(!getFormState) || (getFormState && getEditClicked && getClickedRow && (closBy || closD)) "
         >
-          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
+          <option
+            :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')"
+            selected
+          ></option>
           <option selected="selected" value="New">New</option>
           <option value="Reviewed">Reviewed</option>
           <option value="Scheduled">Scheduled</option>
@@ -142,7 +154,7 @@
           id="sapN"
           :disabled="(getFormState && sapS!='Yes') || (getFormState && getClickedRow!='' && !getEditClicked ) "
           type="text"
-          :required="!getFormState"
+          :required="!getFormState || getEditClicked"
         >
         <!-- </transition> -->
       </div>
@@ -153,9 +165,12 @@
           :disabled="(getFormState && getClickedRow!='') || getEditClicked"
           class="form-control col-md-4"
           type="text"
-          :required="!getFormState"
+          :required="!getFormState || getEditClicked"
         >
-          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
+          <option
+            :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')"
+            selected
+          ></option>
           <option value="Aqil">Aqil</option>
           <option value="Amirul">Amirul</option>
           <option value="Zamri">Zamri</option>
@@ -165,7 +180,7 @@
         </select>
         <label class="col-md-2 col-form-label" for="requestdateBox">*Request Date</label>
         <input
-          :required="!getFormState"
+          :required="!getFormState || getEditClicked"
           :disabled="(getFormState && getClickedRow!='') || getEditClicked"
           v-model="reqD"
           id="requestdateBox"
@@ -185,7 +200,10 @@
           type="text"
           :required="(!getFormState && stat=='Closed') || this.getEditClicked && this.getClickedRow && stat=='Closed'"
         >
-          <option :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')" selected></option>
+          <option
+            :disabled="!this.getFormState||(this.getEditClicked && this.getClickedRow!='')"
+            selected
+          ></option>
           <option value="Aqil">Aqil</option>
           <option value="Amirul">Amirul</option>
           <option value="Zamri">Zamri</option>
@@ -249,7 +267,13 @@
           :value="getEditClicked==true?'CANCEL':'RESET'"
           @click="resetForm"
         >
-        <input v-b-modal="'scheduleModal'" type="button" class="btn mx-1" id="scheduleBtn" value="SCHEDULE">
+        <input
+          v-b-modal="'scheduleModal'"
+          type="button"
+          class="btn mx-1"
+          id="scheduleBtn"
+          value="SCHEDULE"
+        >
       </div>
     </form>
     <b-popover target="popOverHelp" triggers="hover" :placement="'rightbottom'">
@@ -301,7 +325,7 @@ import Velocity from 'velocity-animate'
 import axios from 'axios'
 import uiControl from '@/helperScript/uiControl.js'
 import { error } from 'util'
-import scheduleModal from "@/components/scheduleModal.vue"
+import scheduleModal from '@/components/scheduleModal.vue'
 
 export default {
   name: 'mainForm',
@@ -638,7 +662,6 @@ export default {
               uiControl.displayMessage('Failed to Update')
             })
         } else {
-
         }
       }
       // If system in NEW mode
@@ -702,6 +725,9 @@ export default {
             this.saveSearchData(data)
           } else {
             console.log('Search return nothing')
+
+            this.saveSearchData({})
+
             uiControl.displayMessage('No result !')
           }
 
@@ -756,7 +782,7 @@ export default {
     // console.log(this.apiUrl);
     // console.log(process.env.VUE_APP_API_URL);
   },
-  components:{
+  components: {
     scheduleModal
   }
 }
@@ -771,8 +797,7 @@ $mobile: 768px;
   }
 }
 
-
-.mainArea{
+.mainArea {
   margin-right: auto !important;
 }
 
@@ -797,10 +822,10 @@ $mobile: 768px;
   // visibility: hidden;
 }
 
-#scheduleBtn{
+#scheduleBtn {
   opacity: 0;
-  width:0;
-  display:none;
+  width: 0;
+  display: none;
 }
 
 #sapC {
@@ -895,7 +920,7 @@ $mobile: 768px;
 }
 
 .alertMsg {
-  background-color:#ffc107 ;
+  background-color: #ffc107;
   min-height: 25px;
   width: 25%;
   font-weight: bold;
