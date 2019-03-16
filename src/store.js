@@ -93,7 +93,7 @@ export default new Vuex.Store({
     changeTableCurrentPage (state, payload) {
       state.tableCurrentPage = payload
     },
-    updateJobStatus(state,{data,index}){
+    updateJobStatus (state, { data, index }) {
       state.tableItems[index].stat = data
     }
 
@@ -218,18 +218,17 @@ export default new Vuex.Store({
     changeTableCurrentPage ({ commit, dispatch }, payload) {
       commit('changeTableCurrentPage', payload)
     },
-    updateJobStatus({commit,state,getters}){
-
+    updateJobStatus ({ commit, state, getters }) {
       let index = state.tableItems.findIndex((row) => {
         return row.fmNo == getters.getClickedRow
       })
 
       let payload = {
-        data : "Scheduled",
-        index:index
+        data: 'Scheduled',
+        index: index
       }
 
-      commit("updateJobStatus",payload)
+      commit('updateJobStatus', payload)
     }
   }
 })
